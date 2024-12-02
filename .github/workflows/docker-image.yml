@@ -25,7 +25,7 @@ jobs:
 
       - name: Build and test Docker image
         run: |
-          docker build -f docker/Dockerfile -t ghcr.io/kronton/${{ github.event.repository.name}}:${{ github.event.release.tag_name }} .
+          docker build -f Dockerfile -t ghcr.io/kronton/${{ github.event.repository.name}}:${{ github.event.release.tag_name }} .
         env:
           DOCKER_BUILDKIT: 1  # Enable BuildKit for advanced features
           
