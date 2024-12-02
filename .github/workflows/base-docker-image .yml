@@ -25,14 +25,10 @@ jobs:
 
       - name: Build and test Docker image
         run: |
-          docker build -f Dockerfile -t ghcr.io/kronton/${{ github.event.repository.name}}:${{ github.event.release.tag_name }} .
+          docker build -f Dockerfile -t ghcr.io/kronton/${{ github.event.repository.name}}:base-image .
         env:
           DOCKER_BUILDKIT: 1  # Enable BuildKit for advanced features
           
-      - name: Tag Docker image as latest
-        run: |
-          docker tag ghcr.io/kronton/${{ github.event.repository.name }}:${{ github.event.release.tag_name }} ghcr.io/kronton/${{ github.event.repository.name }}:latest
-      
       - name: Push Docker images
         run: |
-          docker push ghcr.io/kronton/${{ github.event.repository.name}}:${{ github.event.release.tag_name }}
+          docker push ghcr.io/kronton/${{ github.event.repository.name}}:base-image
