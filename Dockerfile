@@ -1,5 +1,5 @@
 # Use ROS Noetic as the base image
-FROM ros:noetic
+FROM ros:noetic-ros-base
 
 # Set environment variables
 ENV LANG=C.UTF-8 LC_ALL=C.UTF-8
@@ -52,6 +52,5 @@ RUN mkdir -p /root/ros2_humble/src \
 
 # Install ROS 2 dependencies
 RUN apt-get upgrade -y \
-    && rosdep init \
     && rosdep update \
     && rosdep install --from-paths /root/ros2_humble/src --
