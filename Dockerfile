@@ -52,5 +52,17 @@ RUN mkdir -p /root/ros2_humble/src \
 
 # Install ROS 2 dependencies
 RUN apt-get upgrade -y \
+    && if [ -f /etc/ros/rosdep/sources.list.d/20-default.list ]; then rm /etc/ros/rosdep/sources.list.d/20-default.list; fi \
+    && rosdep init \
     && rosdep update \
-    && rosdep install --from-paths /root/ros2_humble/src --
+    && rosdep install --from-paths /root/ros2_humble/src --ignore-src -y --skip-keys "fastcdr rti-connext-dds-6.0.1 urdfdom_headers"
+
+    # Build ROS 2 workspace
+RUN cd /root/ros2_humble \
+    && colcon build --symlink-install
+
+# Source the workspace
+RUN echo "source /root/ros2_humble/install/local_setup.bash" >> /root/.bashrc
+
+# Default command
+CMD ["bash"]
